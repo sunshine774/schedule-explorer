@@ -1,0 +1,1 @@
+To actually view the html just click on it in your web browser, but i recommend using google sites and then under the insert section click embed, then embed code, then paste the html there.

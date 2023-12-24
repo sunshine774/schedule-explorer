@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Replacement Tool</title>
+    <style>
+/*  add optional css styling from whosinthereframework.css by pasting below*/
+  </style>
+  <script>
+    function replaceValuesAndPrintLineAbove() {
+      const key_dict = {
+        "original_key1": "replacement1",
+        "original_key2": "replacement2",
+        // THIS IS THE KEY DICTIONARY, ADD THE KEY HERE
+      };
+
+      const result_dict = {
+        "Result": "replacement",
+        "result": "replacement2"
+        // RESULTS DICTIONARY, PASTE HERE
+      };
+
+      const date = document.getElementById('date').value; 
+      const period = document.getElementById('period').value; // you can add .toUpperCase(); to the end of this, this will allow for whatever input you give capitals will not matter. But doing this means there will need to be no lowercase in your key.
+      // eg  const period = document.getElementById('period').value.toUpperCase();
+      const room = document.getElementById('room').value; // same goes for this one, make sure there are no confiicts (rooms with lowercases)
+
+      const replaced_date = replaceValuesWithKey(date, key_dict);
+      const replaced_period = replaceValuesWithKey(period, key_dict);
+      const replaced_room = replaceValuesWithKey(room, key_dict);
+
+      let result = `${replaced_date}_${replaced_period}_${replaced_room}`;
+
+      // Replace result based on result_dict
+      for (const key in result_dict) {
+        const replace = result_dict[key];
+        result = result.replace(new RegExp(key, 'g'), replace);
+      }
+
+      document.getElementById('result').innerText = "Result: " + result;
+    }
+
+    function replaceValuesWithKey(inputStr, keyDict) {
+      for (const original in keyDict) {
+        const replace = keyDict[original];
+        inputStr = inputStr.replace(new RegExp(original, 'g'), replace);
+      }
+      return inputStr;
+    }
+  </script>
+</head>
+<body>
+  <h1>Replacement Tool</h1>
+  <form>
+    <label for="date">Enter a date (dd/mm): </label>
+    <input type="text" id="date"><br><br>
+
+    <label for="period">Enter a period: </label>
+    <input type="text" id="period"><br><br>
+
+    <label for="room">Enter a room: </label>
+    <input type="text" id="room"><br><br>
+
+    <button type="button" onclick="replaceValuesAndPrintLineAbove()">Generate Result</button>
+  </form>
+
+  <div id="result"></div>
+</body>
+</html>

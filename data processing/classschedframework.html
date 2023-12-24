@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Schedule</title>
+    <style>
+        /* Add your CSS styling here */
+        /* paste classschedframework.css for optional styling*/
+    </style>
+</head>
+<body>
+    <label for="classInput">Class:</label>
+    <input type="text" id="classInput" placeholder="Enter class (e.g., 8B)">
+    <label for="dateInput">Date:</label>
+    <input type="text" id="dateInput" placeholder="Enter date (e.g., 30/01)">
+    <button onclick="displaySchedule()">Show Schedule</button>
+
+    <div id="scheduleOutput"></div>
+
+    <script>
+    const scheduleData = {
+// 'CLASS NAME': (PASTE CLASS' TXT FILE)
+//
+//       add a comma at the end of the ']' like ],
+//
+// Do another one until finished, see the example in src if confused.
+// Make sure that that the CLASS NAME is in capitals
+//
+//
+
+
+
+
+
+        
+          };
+
+
+function displaySchedule() {
+    const classInput = document.getElementById('classInput').value.toUpperCase();
+    const dateInput = document.getElementById('dateInput').value;
+
+    const scheduleOutput = document.getElementById('scheduleOutput');
+    scheduleOutput.innerHTML = ''; // Clear previous content
+
+    if (scheduleData[classInput]) {
+        const schedule = scheduleData[classInput].filter(item => item.date === dateInput);
+        if (schedule.length > 0) {
+            const ul = document.createElement('ul');
+            schedule.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.time} - ${item.class} - ${item.room} - ${item.teacher}`; // remove ' - ${item.teacher}' for teachers schedules. keep for class schedules. Example below.
+           //   li.textContent = `${item.time} - ${item.class} - ${item.room}`;
+                ul.appendChild(li);
+            });
+            scheduleOutput.appendChild(ul);
+        } else {
+            scheduleOutput.textContent = 'No schedule available for the specified date.';
+        }
+    } else {
+        scheduleOutput.textContent = 'Invalid class input.';
+    }
+}
+</script>
+</body>
+</html>

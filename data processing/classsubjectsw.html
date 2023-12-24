@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Viewer</title>
+    <style>
+        /* Add any additional styling here from classsubjectsw.ccs by pasting below*/
+    </style>
+</head>
+<body>
+    <h1>Schedule Viewer</h1>
+
+    <label for="classInput">Class:</label>
+    <input type="text" id="classInput" placeholder="Enter class">
+
+    <label for="termSelect">Term:</label>
+    <select id="termSelect">
+        <option value="Term1">Term 1</option>
+        <option value="Term2">Term 2</option>
+        <option value="Term3">Term 3</option>
+        <option value="Term4">Term 4</option>
+    </select>
+
+    <label for="weekSelect">Week:</label>
+    <select id="weekSelect">
+        <!-- Add options dynamically using JavaScript -->
+    </select>
+
+    <button onclick="showSchedule()">Show Schedule</button>
+
+    <div id="scheduleOutput"></div>
+
+    <script>
+        // Define your schedule data
+        const scheduleData = {
+// PASTE BELOW
+
+        };
+
+        // Function to populate the weekSelect dropdown based on the selected term
+        function populateWeeks() {
+            const termSelect = document.getElementById('termSelect');
+            const weekSelect = document.getElementById('weekSelect');
+            weekSelect.innerHTML = '';
+
+            const term = termSelect.value;
+
+            // Add options based on the selected term
+            const weeks = (term === 'Term1') ? 10 :
+                          (term === 'Term2') ? 10 :
+                          (term === 'Term3') ? 10 :
+                          (term === 'Term4') ? 11 : 0;
+
+            for (let i = 1; i <= weeks; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.text = `Week ${i}`;
+                weekSelect.add(option);
+            }
+        }
+
+        // Function to display the schedule
+        function showSchedule() {
+            const classInput = document.getElementById('classInput').value.toUpperCase();
+            const termSelect = document.getElementById('termSelect').value;
+            const weekSelect = document.getElementById('weekSelect').value;
+            const scheduleOutput = document.getElementById('scheduleOutput');
+
+            // Retrieve the schedule data for the selected class
+            const classSchedule = scheduleData[classInput];
+
+            if (!classSchedule) {
+                scheduleOutput.textContent = 'Class not found';
+                return;
+            }
+
+            // Search for the corresponding date within the selected term and week
+            const selectedTerm = classSchedule.find(term => term.term === termSelect);
+
+            if (!selectedTerm) {
+                scheduleOutput.textContent = 'No schedule found for the selected term';
+                return;
+            }
+
+            const selectedWeek = selectedTerm.data.find(week => week.week === `Week${weekSelect}`);
+            
+            if (!selectedWeek) {
+                scheduleOutput.textContent = 'No schedule found for the selected week';
+                return;
+            }
+
+            // Display the schedule information
+            const scheduleInfo = selectedWeek.schedule.map(entry =>
+                `${entry.day} - ${entry.time} - ${entry.room} - ${entry.teacher}`
+            ).join('<br>');
+
+            scheduleOutput.innerHTML = scheduleInfo;
+        }
+
+        // Add event listeners
+        document.getElementById('termSelect').addEventListener('change', populateWeeks);
+        populateWeeks(); // Initialize weeks on page load
+    </script>
+</body>
+</html>
